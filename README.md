@@ -58,7 +58,7 @@ export default {
         <i class="right chevron icon" />
       </a>
     </div>
-    <pdf :src="pdfdata" v-for="i in numPages" :key="i" :id="i" :page="i"
+    <pdf :src="pdfdata" v-for="i in numPages" :key="randomKey" :id="i" :page="i"
       :scale.sync="scale" style="width:100%;margin:20px auto;">
       <template slot="loading">
         loading content here...
@@ -78,6 +78,7 @@ export default {
     return {
       page: 1,
       numPages: 0,
+      randomKey: 1,
       pdfdata: undefined,
       errors: [],
       scale: 'page-width'
@@ -107,6 +108,7 @@ export default {
   methods: {
     getPdf () {
       var self = this;
+      self.randomKey = Math.random(100000);
       self.pdfdata = pdfvuer.createLoadingTask('./static/relativity.pdf');
       self.pdfdata.then(pdf => {
         self.numPages = pdf.numPages;
